@@ -2,15 +2,18 @@ import { defineConfig, loadEnv } from 'vite' // 把 loadEnv 导入提到顶部
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 import Pages from 'vite-plugin-pages'
+import Icon from '@varlet/unplugin-icon-builder/vite'
+import { VarletImportResolver } from '@varlet/import-resolver'
 
-// 关键：defineConfig 接收一个回调函数，参数包含 mode、command 等
+
 export default defineConfig(({ mode }) => {
-  // 现在 mode 是定义好的，可以正常使用
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
     plugins: [vue(), tailwindcss(), AutoImport({
+      resolvers: [VarletImportResolver({ importStyle: false })],
       imports: ['vue', 'vue-router', 'pinia'],
       dts: 'src/auto-imports.d.ts',
       dirs: ['src/composables'],
@@ -19,7 +22,13 @@ export default defineConfig(({ mode }) => {
       extensions: ['vue'],
       dirs: 'src/pages',
       importMode: 'async',
-    })],
+    }),
+    Components({
+      resolvers: [VarletImportResolver()],
+      dirs: ['src/components'],
+      extensions: ['vue'],
+      dts: 'src/components.d.ts',
+    }), Icon()],
     resolve: {
       alias: {
         '@': '/src',
@@ -39,6 +48,6 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(new RegExp(`^${env.VITE_PREFIX_URL}`), ''),
         },
       }
-    }
+    },
   }
 })

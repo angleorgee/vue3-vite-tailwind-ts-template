@@ -3,3 +3,6 @@ declare module 'virtual:generated-pages' {
   const routes: RouteRecordRaw[];
   export default routes;
 }
+
+declare module 'virtual-icons'
+declare module '@varlet/ui/es/style'

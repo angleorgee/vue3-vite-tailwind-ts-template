@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+.container{
+  @apply px-4 py-2;
+}
+
 @layer base {
   .flex-center {
     display: flex;
