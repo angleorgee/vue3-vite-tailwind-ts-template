@@ -17,8 +17,14 @@ declare module 'vue' {
     VarCell: typeof import('@varlet/ui')['_CellComponent']
     VarIcon: typeof import('@varlet/ui')['_IconComponent']
     VarPaper: typeof import('@varlet/ui')['_PaperComponent']
+    VarPopup: typeof import('@varlet/ui')['_PopupComponent']
     VarSpace: typeof import('@varlet/ui')['_SpaceComponent']
+    VarStyleProvider: typeof import('@varlet/ui')['_StyleProviderComponent']
     VarSwitch: typeof import('@varlet/ui')['_SwitchComponent']
+    VarUploader: typeof import('@varlet/ui')['_UploaderComponent']
+    WPopup: typeof import('./components/WPopup/index.vue')['default']
+    WPopupStack: typeof import('./components/WPopup/WPopupStack/index.vue')['default']
+    WUploader: typeof import('./components/WUploader/index.vue')['default']
   }
   export interface GlobalDirectives {
     vRipple: typeof import('@varlet/ui')['_RippleComponent']
