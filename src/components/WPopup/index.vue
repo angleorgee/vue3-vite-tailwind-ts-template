@@ -13,7 +13,7 @@
             class="flex-center justify-between bg-gray-50 py-1.5 rounded-t-xl"
           >
             <div
-              class="cursor-pointer"
+              class="cursor-pointer ml-5 text-gray-400"
               :style="props.cancelStyle"
               @click="handleCancel"
             >

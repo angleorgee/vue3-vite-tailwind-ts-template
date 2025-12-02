@@ -17,8 +17,9 @@
 
         <div class="flex items-center gap-2 text-sm">
           文件大小不能超过
-          <span class="text-orange-600">{{ computedAttr.maxsize }}</span>
-          kb
+          <span class="text-orange-600">{{
+            formatBytes(Number(computedAttr.maxsize))
+          }}</span>
         </div>
       </div>
     </var-uploader>
@@ -28,6 +29,7 @@
 <script lang="ts" setup>
 import { toast } from 'vue-sonner';
 import type { UploaderProps, VarFile } from '@varlet/ui';
+import { formatBytes } from '@/utils';
 type UploadAttr = Partial<UploaderProps>;
 const props = defineProps<{
   uploadAttr?: UploadAttr;
@@ -36,18 +38,29 @@ const files = ref([]);
 const onOverSize = () => {
   toast.error('文件大小超出限制');
 };
-const onAfterRead = (file: VarFile) => {
-  emit('afterRead', file);
+const onAfterRead = (files: VarFile | VarFile[]) => {
+  emit('afterRead', files);
 };
 const defaultAttr = ref<Partial<UploaderProps>>({
-  maxsize: 1024,
+  maxsize: 1024 * 100,
   accept: 'image/*',
 });
 const computedAttr = computed(() => ({
   ...defaultAttr.value,
   ...props.uploadAttr,
 }));
-const emit = defineEmits(['afterRead']);
+
+const clear = () => {
+  files.value = [];
+};
+
+const emit = defineEmits<{
+  (e: 'afterRead', files: VarFile | VarFile[]): void;
+}>();
+
+defineExpose({
+  clear,
+});
 </script>
 
 <style scoped lang="scss"></style>

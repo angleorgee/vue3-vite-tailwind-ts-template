@@ -12,3 +12,24 @@ export const getUserInfoApi = async (token: string): Promise<DetailResponse<User
   const userInfo = JSON.parse(atob(payload))
   return client.get(`/user/${userInfo.user_id}`)
 }
+
+export const addPluginApi = async (data: Recordable): Promise<void> => {
+  const formData = new FormData();
+
+  // 添加文件到 FormData
+  if (data.file) {
+    formData.append('file', data.file as Blob);
+  }
+
+  // 添加其他字段到 FormData
+  Object.keys(data).forEach((key) => {
+    if (key !== 'file') {
+      formData.append(key, data[key] ?? '');
+    }
+  });
+  // 发送请求
+  return client.post('/audit_log/new', {
+    data: formData,
+    requestType: 'form',
+  });
+};
